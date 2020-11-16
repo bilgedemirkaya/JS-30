@@ -1,2 +1,2 @@
 # JS-30
-https://javascript30.com/projects
+https://javascript30.com projects
