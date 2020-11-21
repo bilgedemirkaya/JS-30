@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+const inpt = document.querySelector('input');
+const suggestions = document.getElementsByClassName('suggestions')[0]
+function filterWord(e) {
+
+
+// console.log(e.target.value) grab what user typed
+const val = e.target.value;
+const arr = [];
+fetch(endpoint)
+.then((data) => data.json())
+.then((res) => {
+  res.forEach(element => {
+    // grap if any city matches the search and push our array
+    if (element.city.toLowerCase().includes(val) || element.state.toLowerCase().includes(val)) arr.push(element)
+    
+    // create a li element 
+    const li = arr.map((el) => {     
+      // replace the value with a higlihted span 
+      const city = el.city.replace(val, `<span class="hl">${val}</span>`)
+      const state = el.state.replace(val, `<span class="hl">${val}</span>`)
+      return `
+      <li>
+        <span class="name">${city}, ${state}</span>
+        <span class="population">${el.population}</span>
+      </li>
+    `;
+    }).join('');
+  suggestions.innerHTML = li;
+})
+})}
+inpt.addEventListener('change', filterWord);
+inpt.addEventListener('keyup', filterWord);
+
+</script>
+</body>
+</html>
