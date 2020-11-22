@@ -8,7 +8,7 @@ We made ``` ctx.strokeStyle ``` equal to HSL colour which is Hue-saturation-ligh
 ## Additional Feature 
 I added a small erase button so that you can clear the canvas and start drawing again.
 
-**Demo [here](https://bilgedemirkaya.github.io/JS-30/07%20Fun%20with%20HTML5%20Canvas/index.html)**
+**Demo [here](https://bilgedemirkaya.github.io/JS-30/08%20Fun%20with%20HTML5%20Canvas/index.html)**
 
 ### How it looks? 
-![alt text](https://github.com/bilgedemirkaya/JS-30/blob/main/07%20Fun%20with%20HTML5%20Canvas/canvas.JPG)
+![alt text](https://github.com/bilgedemirkaya/JS-30/blob/main/08%20Fun%20with%20HTML5%20Canvas/canvas.JPG)
