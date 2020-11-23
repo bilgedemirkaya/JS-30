@@ -41,16 +41,7 @@ function updateTime (e) {
 
 function toggleFullscreen() {
     video.webkitRequestFullscreen();
-}
-function makeBig() { 
-    console.log(video.width) 
-    video.width = 600;  
-}  
-  
-function makeSmall() {  
-    console.log(video.width) 
-    video.width = 300;  
-}  
+} 
 // Event listeners 
 video.addEventListener('click',togglePlay);
 toggle.addEventListener('click',togglePlay);
