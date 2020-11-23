@@ -35,7 +35,7 @@ alert('Guess the secret word...');
 window.addEventListener('keyup', (e) => {
   console.log(e.key);
   arr.push(e.key);
-  arr.splice(-secretCode.length - 1, arr.length - secretCode.length);
+ // arr.splice(-secretCode.length - 1, arr.length - secretCode.length);
   if (arr.join('').includes(secretCode)) {
     decode.innerHTML= '';
     decode.insertAdjacentHTML('afterbegin', secretCode);
