@@ -6,6 +6,7 @@ const progressBar = player.querySelector('.progress__filled');
 const toggle = player.querySelector('.toggle');
 const skipButtons = player.querySelectorAll('[data-skip]');
 const ranges = player.querySelectorAll('.player__slider');
+const fullscreen = player.querySelector('.fullscreen');
 
 // Build Functions
 function togglePlay () {
@@ -27,20 +28,41 @@ function handleRange (e) {
     video[e.target.name] = e.target.value;
 }
 
-function handleProgress (e) {
+function handleProgress () {
     // will update the progressbar every time video progresses
     const percentage = (video.currentTime / video.duration) * 100;
     progressBar.style.flexBasis = `${percentage}%`
-    
-    // toggle progress bar 
-    
-
 }
 
+function updateTime (e) {
+    const updateTime = (e.offsetX / progress.offsetWidth) * video.duration;
+    video.currentTime = updateTime;
+}
+
+function toggleFullscreen() {
+    video.webkitRequestFullscreen();
+}
+function makeBig() { 
+    console.log(video.width) 
+    video.width = 600;  
+}  
+  
+function makeSmall() {  
+    console.log(video.width) 
+    video.width = 300;  
+}  
 // Event listeners 
 video.addEventListener('click',togglePlay);
 toggle.addEventListener('click',togglePlay);
 skipButtons.forEach(btn => btn.addEventListener('click',skip));
 ranges.forEach(btn => btn.addEventListener('click',handleRange));
-progressBar.addEventListener('click',handleProgress);
 video.addEventListener('timeupdate', handleProgress); 
+
+// fullscreen
+fullscreen.addEventListener('click', toggleFullscreen);
+
+let mousedown = false; // when someone is mouses down we will set it to true
+progress.addEventListener('click', updateTime);
+progress.addEventListener('mousemove', () => mousedown && updateTime); // if mousedown true, is gonna update time
+progress.addEventListener('mousedown' , () => mousedown = true);
+progress.addEventListener('mouseup' , () => mousedown = false);
