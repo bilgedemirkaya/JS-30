@@ -20,22 +20,22 @@ name2 = 'Chad';
 
 When you capy one variable to another, if you change the one you copied, it wont change the original one as expected.
 
-**Arrays reference and copy**
+## Arrays reference and copy
 
 ![alt text](https://github.com/bilgedemirkaya/JS-30/blob/main/14%20JS%20References%20vs%20Copying/arraycopy.png)
 
 When copying two array; 
 if we update the element of the copied array, it will also **change** original array. Because when we do 
 ``` const team = players ``` we are not copying the array, **we are making a reference to that array**.
-**To copy array** 
+### To copy array
 
 You can do;
 
 ``` const team = players.slice() ``` OR `` const team = [].concat(players )`` OR ``const team = [...players]`` OR  `` const team = Array.from(players)  ``
 
-**Objects reference and copy**
+## Objects reference and copy
 It is also same in objects.
-**To copy array** 
+### To copy object
 
 You can use;
 
