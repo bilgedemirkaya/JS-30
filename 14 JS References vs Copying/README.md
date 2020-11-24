@@ -22,7 +22,7 @@ When you capy one variable to another, if you change the one you copied, it wont
 
 **Arrays reference and copy**
 
-![alt text](https://github.com/bilgedemirkaya/JS-30/blob/main/14%20JS%20References%20vs%20Copying/arraycopy.JPG)
+![alt text](https://github.com/bilgedemirkaya/JS-30/blob/main/14%20JS%20References%20vs%20Copying/arraycopy.png)
 
 When copying two array; 
 if we update the element of the copied array, it will also **change** original array. Because when we do 
