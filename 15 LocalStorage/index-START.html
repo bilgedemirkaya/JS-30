@@ -53,6 +53,7 @@
       return `<li> 
                     <input type="checkbox" data-index= ${i} id ="item${i}" ${item.done ? 'checked' : ""} />
                     <label for= "item${i}" > ${item.inpt} </label>
+                    <button type="button" class="rm-btn" data-index=${i}> x </button> 
               </li>`   
     }).join('')
   }
@@ -66,10 +67,23 @@
     showListing();
   }
 
+  function removeItem (e){
+    if(!e.target.matches('button')) return;
+    const index = e.target.dataset.index;
+    console.log(items);
+    items.splice(index,1);
+    localStorage.setItem('items', JSON.stringify(items));
+    showListing()
+  }
+
   // event listener 
-  addItems.addEventListener('submit',addItem);
-  itemsList.addEventListener('click',toggleItem);
-  showListing();
+  addItems.addEventListener('submit', addItem);
+  itemsList.addEventListener('click', toggleItem);
+
+ // delete items
+
+showListing();
+itemsList.addEventListener('click', removeItem);
 
 </script>
 
