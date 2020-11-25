@@ -28,7 +28,7 @@
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
-  const items = [];
+  const items = JSON.parse(localStorage.getItem('items')) || [];
 
   function addItem (e) {
     e.preventDefault();
@@ -44,21 +44,33 @@
     // console.log(items);
     this.reset();
     showListing();
-    localStorage.setItem('items',JSON.parse(items));
+    localStorage.setItem('items', JSON.stringify(items));
   }
 
   function showListing () {
     itemsList.innerHTML = items.map((item, i) => {
       // id and label should be the same. Its how you link them together
       return `<li> 
-                    <input type="checkbox" data-index= ${i} id ="item${i}" ${item.done ? checked : ""} />
+                    <input type="checkbox" data-index= ${i} id ="item${i}" ${item.done ? 'checked' : ""} />
                     <label for= "item${i}" > ${item.inpt} </label>
               </li>`   
     }).join('')
   }
 
+  function toggleItem (e) {
+    if(!e.target.matches('input')) return;
+    const index = e.target.dataset.index;
+    console.log(index);
+    items[index].done = !items[index].done
+    localStorage.setItem('items', JSON.stringify(items));
+    showListing();
+  }
+
   // event listener 
   addItems.addEventListener('submit',addItem);
+  itemsList.addEventListener('click',toggleItem);
+  showListing();
+
 </script>
 
 
