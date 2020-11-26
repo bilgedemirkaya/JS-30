@@ -16,4 +16,4 @@ For this project we are accessing the webcam which is must be tied to secure ori
     strip.insertBefore(link, strip.firstChild);
  ``
 
-![alt text](https://github.com/bilgedemirkaya/JS-30/blob/main/19-Webcam%20Fun/webcam.JPG)
+![alt text](https://github.com/bilgedemirkaya/JS-30/blob/main/19%20Webcam%20Fun/webcam.JPG)
