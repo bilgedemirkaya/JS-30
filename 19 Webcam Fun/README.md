@@ -9,10 +9,15 @@ For this project we are accessing the webcam which is must be tied to secure ori
 
 `` 
     const data = canvas.toDataURL('image/jpeg');
+
     const link = document.createElement('a');
+
     link.href = data;
+
     link.setAttribute('download', 'potato'); // u can set attribute of download to the link
+
     link.innerHTML = `<img src="${data}" alt="potato" />`;
+    
     strip.insertBefore(link, strip.firstChild);
  ``
 
