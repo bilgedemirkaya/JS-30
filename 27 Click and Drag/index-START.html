@@ -38,14 +38,14 @@
     const slider = document.querySelector('.items');
     let isGrabbed = false;
     let startX;
-    let scrollLeft;
+    let loc;
 
     slider.addEventListener('mousedown', (e) => {
       console.log('grabbed')
       isGrabbed = true;
       slider.classList.add('active');
       startX = e.pageX - slider.offsetLeft; //page x - margin 
-      scrollLeft = slider.scrollLeft; // we store where exactly we grap the item at first
+      loc = slider.scrollLeft; // we store where exactly we grap the item at first
      // console.log(scrollLeft)
     });
 
@@ -67,12 +67,12 @@
       const x = e.pageX - slider.offsetLeft; 
 
       //how far we scrolled
-      const walk = (x - startX);  // *3 for sliding effect
+      const walk = (x - startX) * 3;  // *3 for sliding effect
       //console.log(walk)
       //console.log(slider.scrollLeft)
       //change the slider as how far we scrolled
-      console.log(scrollLeft)
-      slider.scrollLeft = scrollLeft - walk;
+     // console.log(scroll)
+      slider.scrollLeft = loc - walk;
     });
 </script>
 
