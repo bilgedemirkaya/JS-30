@@ -3,7 +3,7 @@ const timerDisplay = document.querySelector('.display__time-left');
 const endTime = document.querySelector('.display__end-time');
 const buttons = document.querySelectorAll('[data-time]');
 
-function countDown ( secs) {
+function countDown (secs) {
     dataset = this.dataset.time || secs;
     //console.log(countdown);
     let beBack;
@@ -41,12 +41,10 @@ function countDown ( secs) {
     timerDisplay.textContent = `${mins}:${secs < 10 ? '0' : '' }${secs}`
     countdown = setInterval(() => {
         console.log(mins,secs);
-
         if (mins!== 0 && secs === 0) {
             secs = 60;
             mins -= 1;
         }
-
         secs = secs - 1;
         console.log(secs);
         // check if we should stop it!
@@ -68,4 +66,3 @@ document.customForm.addEventListener('submit', function(e) {
     countDown(secs)
     this.reset();
   });
-  
