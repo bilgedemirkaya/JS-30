@@ -11,6 +11,7 @@ function countDown (secs) {
     dataset = this.dataset.time || secs;
 }
 ``
+<br>
 ``let hours = new Date().getHours()`` && ``let minutes = new Date().getMinutes()`` will give us the current hours, minutes.
 
 ## Second Steps
