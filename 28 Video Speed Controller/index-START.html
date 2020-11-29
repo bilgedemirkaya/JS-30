@@ -18,15 +18,30 @@
   const speed = document.querySelector('.speed');
   const bar = document.querySelector('.speed-bar');
   const video = document.querySelector('.flex');
-  console.log(bar)
+  //console.log(bar)
 
   function controlSpeed (e) {
-    console.log(e.pageY);
-    const y = e.pageY - e.target.offsetTop;
-    console.log(y);
+
+  // this == e.target ? console.log('yes') : console.log('no') is not equal this time
+  // console.log(e.target) // speed-bar
+  // console.log(this) // speed
+   // console.log(e.pageY);
+    const y = e.pageY - this.offsetTop;
+    //console.log(y);
 
     const percent = y / this.offsetHeight;
-    console.log(percent)
+    percentage = Math.round(percent * 100);
+    const min = 0.5;
+    const max = 4;
+    const rate = (max-min) * percent + min;
+
+   // console.log(percentage)
+    bar.style.height = `${percentage}%`
+    bar.innerHTML = `${rate.toFixed(2)}x`
+    //console.log(video.playbackRate);
+    video.playbackRate = rate;
+
+    
   }
 
   speed.addEventListener('mousemove', controlSpeed);
