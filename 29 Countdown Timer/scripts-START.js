@@ -3,12 +3,11 @@ const timerDisplay = document.querySelector('.display__time-left');
 const endTime = document.querySelector('.display__end-time');
 const buttons = document.querySelectorAll('[data-time]');
 
-function countDown () {
-    dataset = this.dataset.time;
+function countDown ( secs) {
+    dataset = this.dataset.time || secs;
     //console.log(countdown);
-    let mins;
-    let secs;
     let beBack;
+    let mins;
     let hours = new Date().getHours();
     let minutes = new Date().getMinutes();
    
@@ -44,7 +43,7 @@ function countDown () {
         console.log(mins,secs);
 
         if (mins!== 0 && secs === 0) {
-            secs = 59;
+            secs = 60;
             mins -= 1;
         }
 
@@ -63,6 +62,10 @@ function countDown () {
 // add listener on buttons 
 buttons.forEach(button => button.addEventListener('click', countDown));
 document.customForm.addEventListener('submit', function(e) {
-
+    e.preventDefault();
+    const secs = (this.minutes.value) * 60;
+    console.log(secs)
+    countDown(secs)
+    this.reset();
   });
   
