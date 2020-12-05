@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JS31 Task Manager </title>
+    <script src="scripts.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  </head>
+    <body>
+      <div class="container">
+        <div class="jumbotron">
+            <h3>Add New Task:</h3>
+            <form id="taskForm">
+                <label for="taskName">Task </label>
+                <input type="text" class="form-control" id="description" placeholder="Enter a task..."> </input>
+
+                <label for="description">Description</label>
+                <textarea type="text" class="form-control" id="description"> </textarea>
+
+                <label for="deadline"> Deadline </label>
+                <select id="issueSeverityInput" class="form-control">
+                    <option value=" ">Today</option>
+                    <option value="5">Tomorrow</option>
+                    <option value="10">In two days</option>
+                </select>
+                <label for="owner">Assigned To</label>
+                <input type="text" class="form-control" id="owner" placeholder="Enter responsible ...">
+            </form>
+            <div class="col-lg-12">
+                <div id="taskList">
+                </div>
+              </div>
+            </div>
+    </body>
+    </html>
