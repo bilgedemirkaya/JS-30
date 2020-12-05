@@ -30,6 +30,7 @@ function addNewTask (e) {
   }
   console.log(task);
   tasks.push(task);
+  this.reset();
  // console.log(tasks);
   showTaskList()
   localStorage.setItem('tasks', JSON.stringify(tasks))
@@ -112,6 +113,7 @@ function doneTask (e) {
 if (hoursLeft == "1") {
     alert("You only have one hour to finish your task.")
 }
+
 // remove all
 function removeAll () {
 tasks = tasks.filter(function(task){
