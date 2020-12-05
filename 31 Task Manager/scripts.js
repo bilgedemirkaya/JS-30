@@ -1,6 +1,7 @@
 
 const form = document.querySelector("#taskForm");
 const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+const taskList =  document.getElementById("taskList"); 
 
 function addNewTask (e) {
     e.preventDefault();
@@ -21,7 +22,8 @@ function addNewTask (e) {
     description,
     deadline,
     assigned,
-    done : false
+    done : false,
+    hoursToComplete: 0,
   }
   console.log(task);
   tasks.push(task);
@@ -32,24 +34,20 @@ function addNewTask (e) {
 
 function addTaskToDom () {
    // console.log(tasks);
-    const taskList =  document.getElementById("taskList"); 
     taskList.innerHTML = tasks.map((task, i) => {
         return `<li class="list"> 
         <div class="jumbotron"> 
-       
-        <p> <span class="label label-danger"> ${task.done === true ? "done" : "not completed"} </span></p>
-        
+        <p> <span class="label ${task.done === true ? "label-success" : "label-danger" }"> ${task.done == true ? "Done! ✔️" : "not completed"} </span></p>
         <div class="task"><h6> Task ID: ${task.id} </h6> <h2> <span style="font-weight:bold;"> Task : </span> ${task.taskName} </h2> 
         <h5> <span style="font-weight:bold;"> Description: </span>  ${task.description} </h3>
          </div>
         <p><span class="glyphicon glyphicon-time"></span>  ${task.deadline} </p>
         <button type="button" class="rm-btn btn btn-danger" data-index=${i}> Cancel Task </button> 
-        <button type="button" class="done-btn btn btn-success" data-index=${i}> Done </button> 
+        <button type="button" class="done-btn btn btn-success" data-index=${i}> Set Task as Finished </button>
         <p style="float:right"><span class="glyphicon glyphicon-user"></span> ${task.assigned} </p>
         </div>
         </li>`; 
       }).join('')
-
 }
 
 function removeTask (e) {
@@ -62,7 +60,42 @@ function removeTask (e) {
 }
 
 
+function doneTask (e) {
+    if(e.target.classList[0] !== 'done-btn') return;
+    const hours = document.querySelector('#time');
+    console.log(hours);
+    // ask how many hours 
+    const index = e.target.dataset.index;
+    console.log(tasks[index]["id"]);
+     //console.log(taskList.getElementsByTagName("li")[index]) // will grab whichever task you are clicking
+    const target = taskList.getElementsByTagName("li")[index];
+    const label = document.createElement('label');
+    const inpt = document.createElement('input');
+    const done = document.createElement("button");
+    done.innerHTML = "OK"  
+    done.style.backgroundColor = "green";
+    done.style.color = "white";
+    inpt.type = 'number';
+    inpt.id = 'hour';
+    label.textContent = 'How many hours you worked for it?'
+    label.for = "hour";
+    target.appendChild(label);
+    target.appendChild(inpt);
+    target.appendChild(done);
+}
+
+function setAsFinished () {
+    const index = e.target.dataset.index;
+    // console.log(tasks[index]);
+    tasks[index]["done"] = true;
+    console.log(tasks[index]);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    addTaskToDom()
+}
+
+
 // event listeners
 form.addEventListener("submit",addNewTask);
-taskList.addEventListener("click",removeTask)
+taskList.addEventListener("click",removeTask);
+taskList.addEventListener("click",doneTask);
 addTaskToDom ()
