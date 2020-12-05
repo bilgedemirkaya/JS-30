@@ -29,4 +29,13 @@
     width:40%;
 }
 
+.header {
+    text-align: center;
+    color:rgb(196, 60, 60);
+}
+.rm-all{
+    padding:15px;
+    background-color:rgb(228, 113, 113);
+    margin:15px;
+}
 

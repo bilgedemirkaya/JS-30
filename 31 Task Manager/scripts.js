@@ -1,7 +1,10 @@
 
 const form = document.querySelector("#taskForm");
-const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 const taskList =  document.getElementById("taskList"); 
+
+const hours = new Date().getHours();
+let hoursLeft;
 
 function addNewTask (e) {
     e.preventDefault();
@@ -28,13 +31,21 @@ function addNewTask (e) {
   console.log(task);
   tasks.push(task);
  // console.log(tasks);
-  addTaskToDom()
+  showTaskList()
   localStorage.setItem('tasks', JSON.stringify(tasks))
 }
 
-function addTaskToDom () {
-   // console.log(tasks);
+function showTaskList () {
     taskList.innerHTML = tasks.map((task, i) => {
+        if (task.deadline == "today") {
+            hoursLeft = 24 - hours;
+        }
+        else if (task.deadline == "tomorrow") {
+            hoursLeft = 48 - hours;
+        }
+        else {
+            hoursLeft = 72 - hours;
+        }
         return `<li class="list"> 
         <div class="jumbotron"> 
         <p> <span class="label ${task.done === true ? "label-success" : "label-danger" }"> ${task.done == true ? `Done! ✔️ Worked for ${task.hours} hours` : "not completed"} </span></p>
@@ -42,7 +53,7 @@ function addTaskToDom () {
         <h5> <span style="font-weight:bold;"> Description: </span>  ${task.description} </h3>
         </div>
         <div id="${task.done === true ? "rmv" : "" }">
-        <p><span class="glyphicon glyphicon-time"></span>  ${task.deadline} </p>
+        <p><span class="glyphicon glyphicon-time"></span>  ${task.deadline} ~ <span style="opacity:0.8; font-size:16px;" > ${hoursLeft} hours left </span> </p> 
         <button type="button" class="rm-btn btn btn-danger" data-index=${i}> Cancel Task </button> 
         <button type="button" class="done-btn btn btn-success" data-index=${i}> Set Task as Finished </button>
         </div>
@@ -58,7 +69,7 @@ function removeTask (e) {
     const index = e.target.dataset.index;
     tasks.splice(index,1);
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    addTaskToDom()
+    showTaskList()
 }
 
 
@@ -93,14 +104,25 @@ function doneTask (e) {
         tasks[index]["hours"] = inpt.value;
         // console.log(tasks[index]);
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        addTaskToDom()
+        showTaskList()
     });
 }
 
-
+// alert before deadline
+if (hoursLeft == "1") {
+    alert("You only have one hour to finish your task.")
+}
+// remove all
+function removeAll () {
+tasks = tasks.filter(function(task){
+    return task.done == false;
+});
+localStorage.setItem('tasks', JSON.stringify(tasks));
+showTaskList()
+}
 
 // event listeners
 form.addEventListener("submit",addNewTask);
 taskList.addEventListener("click",removeTask);
 taskList.addEventListener("click",doneTask);
-addTaskToDom ()
+showTaskList()
