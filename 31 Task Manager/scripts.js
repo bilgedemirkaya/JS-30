@@ -37,13 +37,15 @@ function addTaskToDom () {
     taskList.innerHTML = tasks.map((task, i) => {
         return `<li class="list"> 
         <div class="jumbotron"> 
-        <p> <span class="label ${task.done === true ? "label-success" : "label-danger" }"> ${task.done == true ? "Done! ✔️" : "not completed"} </span></p>
+        <p> <span class="label ${task.done === true ? "label-success" : "label-danger" }"> ${task.done == true ? `Done! ✔️ Worked for ${task.hours} hours` : "not completed"} </span></p>
         <div class="task"><h6> Task ID: ${task.id} </h6> <h2> <span style="font-weight:bold;"> Task : </span> ${task.taskName} </h2> 
         <h5> <span style="font-weight:bold;"> Description: </span>  ${task.description} </h3>
-         </div>
+        </div>
+        <div id="${task.done === true ? "rmv" : "" }">
         <p><span class="glyphicon glyphicon-time"></span>  ${task.deadline} </p>
         <button type="button" class="rm-btn btn btn-danger" data-index=${i}> Cancel Task </button> 
         <button type="button" class="done-btn btn btn-success" data-index=${i}> Set Task as Finished </button>
+        </div>
         <p style="float:right"><span class="glyphicon glyphicon-user"></span> ${task.assigned} </p>
         </div>
         </li>`; 
@@ -61,37 +63,40 @@ function removeTask (e) {
 
 
 function doneTask (e) {
-    if(e.target.classList[0] !== 'done-btn') return;
-    const hours = document.querySelector('#time');
-    console.log(hours);
-    // ask how many hours 
+    if(e.target.classList[0] !== 'done-btn') return; // select only done button
+    //console.log(taskList.getElementsByTagName("li")[index]) // will grab whichever task you are clicking
+
+    // create elements 
     const index = e.target.dataset.index;
-    console.log(tasks[index]["id"]);
-     //console.log(taskList.getElementsByTagName("li")[index]) // will grab whichever task you are clicking
     const target = taskList.getElementsByTagName("li")[index];
     const label = document.createElement('label');
     const inpt = document.createElement('input');
     const done = document.createElement("button");
+
+    // add style to elements
     done.innerHTML = "OK"  
     done.style.backgroundColor = "green";
     done.style.color = "white";
-    inpt.type = 'number';
+
+    inpt.type = 'number'; 
     inpt.id = 'hour';
-    label.textContent = 'How many hours you worked for it?'
+    label.textContent = 'How many hours you worked for it? '
     label.for = "hour";
+
+    // append it to the target element
     target.appendChild(label);
     target.appendChild(inpt);
     target.appendChild(done);
+    done.addEventListener("click",() => {
+        if (inpt.value == "") {inpt.value = "0"; }
+        tasks[index]["done"] = true;
+        tasks[index]["hours"] = inpt.value;
+        // console.log(tasks[index]);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        addTaskToDom()
+    });
 }
 
-function setAsFinished () {
-    const index = e.target.dataset.index;
-    // console.log(tasks[index]);
-    tasks[index]["done"] = true;
-    console.log(tasks[index]);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
-    addTaskToDom()
-}
 
 
 // event listeners
