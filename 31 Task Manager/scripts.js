@@ -1,6 +1,6 @@
-const form = document.querySelector("#taskForm");
+const form = document.querySelector('#taskForm');
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-const taskList =  document.getElementById("taskList"); 
+const taskList =  document.getElementById('taskList'); 
 
 const hours = new Date().getHours();
 let hoursLeft;
@@ -9,10 +9,10 @@ function addNewTask (e) {
     e.preventDefault();
 
     // select input values
-    const taskName = document.getElementById("taskName").value;
-    const description = document.getElementById("description").value;
-    const deadline = document.getElementById("deadline").value;
-    const assigned = document.getElementById("owner").value;
+    const taskName = document.getElementById('taskName').value;
+    const description = document.getElementById('description').value;
+    const deadline = document.getElementById('deadline').value;
+    const assigned = document.getElementById('owner').value;
    
     function generateId () {
         return Math.random().toString(9).substring(2);
@@ -39,14 +39,14 @@ function addNewTask (e) {
 
 function showTaskList () {
     taskList.innerHTML = tasks.map((task, i) => {
-        if (task.deadline == "today") hoursLeft = 24 - hours;   
+        if (task.deadline == 'today') hoursLeft = 24 - hours;   
 
-        else if (task.deadline == "tomorrow") hoursLeft = 48 - hours;   
+        else if (task.deadline == 'tomorrow') hoursLeft = 48 - hours;   
 
         else hoursLeft = 72 - hours;
         
-        return `<li class="list"> 
-        <div class="jumbotron"> 
+        return `<li class='list'> 
+        <div class='jumbotron'> 
         <p> <span class="label ${task.done === true ? "label-success" : "label-danger" }"> ${task.done == true ? `Done! ✔️ Worked for ${task.hours} hours` : "not completed"} </span></p>
         <div class="task"><h6> Task ID: ${task.id} </h6> <h2> <span style="font-weight:bold;"> Task : </span> ${task.taskName} </h2> 
         <h5> <span style="font-weight:bold;"> Description: </span>  ${task.description} </h3>
@@ -77,17 +77,18 @@ function doneTask (e) {
 
     // create elements 
     const index = e.target.dataset.index;
-    const target = taskList.getElementsByTagName("li")[index];
+    const target = taskList.getElementsByTagName('li')[index];
     const label = document.createElement('label');
     const inpt = document.createElement('input');
-    const done = document.createElement("button");
+    const done = document.createElement('button');
 
     // add attributes to elements
-    done.classList = "done-btn";
+    done.classList = 'done-btn';
+    done.innerHTML = 'OK';
     inpt.type = 'number'; 
     inpt.id = 'hour';
     label.textContent = 'How many hours you worked for it?';
-    label.for = "hour";
+    label.for = 'hour';
 
     // append it to the target element
     target.appendChild(label);
@@ -95,11 +96,11 @@ function doneTask (e) {
     target.appendChild(done);
 
     // listen when clicked done button
-    done.addEventListener("click", () => {
-        if (inpt.value == "") inpt.value = "0";
+    done.addEventListener('click', () => {
+        if (inpt.value == '') inpt.value = '0';
 
-        tasks[index]["done"] = true;
-        tasks[index]["hours"] = inpt.value;
+        tasks[index]['done'] = true;
+        tasks[index]['hours'] = inpt.value;
       
         // add to local storage
         localStorage.setItem('tasks', JSON.stringify(tasks));
@@ -108,7 +109,7 @@ function doneTask (e) {
 }
 
 // alert before deadline
-if (hoursLeft == "1") alert("You only have one hour to finish your task.");
+if (hoursLeft == '1') alert('You only have one hour to finish your task.');
 
 
 // remove all
@@ -123,7 +124,7 @@ function removeAll () {
 }
 
 // event listeners
-form.addEventListener("submit",addNewTask);
-taskList.addEventListener("click",removeTask);
-taskList.addEventListener("click",doneTask);
+form.addEventListener('submit',addNewTask);
+taskList.addEventListener('click',removeTask);
+taskList.addEventListener('click',doneTask);
 showTaskList();
