@@ -1,4 +1,3 @@
-
 const form = document.querySelector("#taskForm");
 let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 const taskList =  document.getElementById("taskList"); 
@@ -8,6 +7,7 @@ let hoursLeft;
 
 function addNewTask (e) {
     e.preventDefault();
+
     // select input values
     const taskName = document.getElementById("taskName").value;
     const description = document.getElementById("description").value;
@@ -28,25 +28,23 @@ function addNewTask (e) {
     done : false,
     hoursToComplete: 0,
   }
-  console.log(task);
+  // add task to local storage
   tasks.push(task);
   this.reset();
- // console.log(tasks);
-  showTaskList()
-  localStorage.setItem('tasks', JSON.stringify(tasks))
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+
+  // show in UI
+  showTaskList(); 
 }
 
 function showTaskList () {
     taskList.innerHTML = tasks.map((task, i) => {
-        if (task.deadline == "today") {
-            hoursLeft = 24 - hours;
-        }
-        else if (task.deadline == "tomorrow") {
-            hoursLeft = 48 - hours;
-        }
-        else {
-            hoursLeft = 72 - hours;
-        }
+        if (task.deadline == "today") hoursLeft = 24 - hours;   
+
+        else if (task.deadline == "tomorrow") hoursLeft = 48 - hours;   
+
+        else hoursLeft = 72 - hours;
+        
         return `<li class="list"> 
         <div class="jumbotron"> 
         <p> <span class="label ${task.done === true ? "label-success" : "label-danger" }"> ${task.done == true ? `Done! ✔️ Worked for ${task.hours} hours` : "not completed"} </span></p>
@@ -61,7 +59,7 @@ function showTaskList () {
         <p style="float:right"><span class="glyphicon glyphicon-user"></span> ${task.assigned} </p>
         </div>
         </li>`; 
-      }).join('')
+      }).join('');
 }
 
 function removeTask (e) {
@@ -70,9 +68,8 @@ function removeTask (e) {
     const index = e.target.dataset.index;
     tasks.splice(index,1);
     localStorage.setItem('tasks', JSON.stringify(tasks));
-    showTaskList()
+    showTaskList();
 }
-
 
 function doneTask (e) {
     if(e.target.classList[0] !== 'done-btn') return; // select only done button
@@ -85,46 +82,48 @@ function doneTask (e) {
     const inpt = document.createElement('input');
     const done = document.createElement("button");
 
-    // add style to elements
-    done.innerHTML = "OK"  
-    done.style.backgroundColor = "green";
-    done.style.color = "white";
-
+    // add attributes to elements
+    done.classList = "done-btn";
     inpt.type = 'number'; 
     inpt.id = 'hour';
-    label.textContent = 'How many hours you worked for it? '
+    label.textContent = 'How many hours you worked for it?';
     label.for = "hour";
 
     // append it to the target element
     target.appendChild(label);
     target.appendChild(inpt);
     target.appendChild(done);
-    done.addEventListener("click",() => {
-        if (inpt.value == "") {inpt.value = "0"; }
+
+    // listen when clicked done button
+    done.addEventListener("click", () => {
+        if (inpt.value == "") inpt.value = "0";
+
         tasks[index]["done"] = true;
         tasks[index]["hours"] = inpt.value;
-        // console.log(tasks[index]);
+      
+        // add to local storage
         localStorage.setItem('tasks', JSON.stringify(tasks));
-        showTaskList()
+        showTaskList();
     });
 }
 
 // alert before deadline
-if (hoursLeft == "1") {
-    alert("You only have one hour to finish your task.")
-}
+if (hoursLeft == "1") alert("You only have one hour to finish your task.");
+
 
 // remove all
 function removeAll () {
-tasks = tasks.filter(function(task){
-    return task.done == false;
-});
-localStorage.setItem('tasks', JSON.stringify(tasks));
-showTaskList()
+    tasks = tasks.filter(function(task){
+        return task.done == false;
+    });
+
+    // remove filtered tasks
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    showTaskList();
 }
 
 // event listeners
 form.addEventListener("submit",addNewTask);
 taskList.addEventListener("click",removeTask);
 taskList.addEventListener("click",doneTask);
-showTaskList()
+showTaskList();
